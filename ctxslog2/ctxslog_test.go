@@ -25,6 +25,16 @@ func TestCtxSlog2(t *testing.T) {
 	if !strings.Contains(buf.String(), "example") {
 		t.Fatal("did not log")
 	}
+	ctx = ctxslog2.With(ctx, "key", "value")
+	allocsPerRun = testing.AllocsPerRun(1, func() {
+		ctxslog2.Info(ctx, "example")
+	})
+	if allocsPerRun > 0 {
+		t.Fatalf("extra allocations introduced %.0f", allocsPerRun)
+	}
+	if !strings.Contains(buf.String(), "value") {
+		t.Fatal("did not log the value from With")
+	}
 }
 
 func Example() {

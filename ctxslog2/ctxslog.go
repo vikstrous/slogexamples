@@ -26,6 +26,10 @@ func With(ctx context.Context, args ...any) context.Context {
 	return Put(ctx, get(ctx).With(args...))
 }
 
+func WithGroup(ctx context.Context, group string) context.Context {
+	return Put(ctx, get(ctx).WithGroup(group))
+}
+
 type key struct{}
 
 func get(ctx context.Context) *slog.Logger {
