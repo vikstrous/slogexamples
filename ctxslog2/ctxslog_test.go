@@ -1,4 +1,4 @@
-package ctxslog_test
+package ctxslog2_test
 
 import (
 	"bytes"
@@ -7,18 +7,17 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/vikstrous/slogexamples/ctxslog"
+	"github.com/vikstrous/slogexamples/ctxslog2"
 	"golang.org/x/exp/slog"
 )
 
-func TestCtxSlog(t *testing.T) {
-	ctx := context.Background()
+func TestCtxSlog2(t *testing.T) {
 	// Pre-allocate the output buffer so the test doesn't cause extra allocations
 	buf := bytes.NewBuffer(make([]byte, 0, 1000))
 	sl := slog.New(slog.NewTextHandler(buf, nil))
-	l := ctxslog.New(sl)
+	ctx := ctxslog2.Put(context.Background(), sl)
 	allocsPerRun := testing.AllocsPerRun(1, func() {
-		l.Info(ctx, "example")
+		ctxslog2.Info(ctx, "example")
 	})
 	if allocsPerRun > 0 {
 		t.Fatalf("extra allocations introduced %.0f", allocsPerRun)
@@ -29,7 +28,6 @@ func TestCtxSlog(t *testing.T) {
 }
 
 func ExampleInfo() {
-	ctx := context.Background()
-	l := ctxslog.New(slog.New(slog.NewTextHandler(os.Stdout, nil)))
-	l.Info(ctx, "example")
+	ctx := ctxslog2.Put(context.Background(), slog.New(slog.NewTextHandler(os.Stdout, nil)))
+	ctxslog2.Info(ctx, "example")
 }

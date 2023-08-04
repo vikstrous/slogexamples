@@ -32,7 +32,7 @@ func TestOtelHandler(t *testing.T) {
 	tracer := sdktrace.NewTracerProvider(sdktrace.WithIDGenerator(TestIDGenerator{})).Tracer("")
 
 	// Pre-allocate the output buffer so the test doesn't cause extra allocations
-	buf := bytes.NewBuffer(make([]byte, 1000))
+	buf := bytes.NewBuffer(make([]byte, 0, 1000))
 	sl := slog.New(otelhandler.NewOtelHandler(slog.NewTextHandler(buf, nil)))
 	// Make sure the WithX methods don't cause the handler to get unwrapped
 	sl = sl.WithGroup("g").With("key", "value")
