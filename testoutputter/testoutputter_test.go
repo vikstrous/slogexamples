@@ -33,7 +33,7 @@ func TestOutputter(t *testing.T) {
 	}
 }
 
-func ExampleNewTestOutputter() {
+func Example() {
 	var t testing.TB
 	logger := slog.New(slog.NewTextHandler(testoutputter.NewTestOutputter(t, nil), nil))
 	logger.Info("example")

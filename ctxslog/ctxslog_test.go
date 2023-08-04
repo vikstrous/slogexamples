@@ -28,7 +28,7 @@ func TestCtxSlog(t *testing.T) {
 	}
 }
 
-func ExampleInfo() {
+func Example() {
 	ctx := context.Background()
 	l := ctxslog.New(slog.New(slog.NewTextHandler(os.Stdout, nil)))
 	l.Info(ctx, "example")

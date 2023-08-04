@@ -58,7 +58,7 @@ func TestOtelHandler(t *testing.T) {
 	t.Log(output)
 }
 
-func ExampleNewOtelHandler() {
+func Example() {
 	ctx := context.Background()
 	sl := slog.New(otelhandler.NewOtelHandler(slog.NewTextHandler(os.Stderr, nil)))
 	sl.InfoContext(ctx, "example")

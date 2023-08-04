@@ -1,6 +1,7 @@
 package testerrorer_test
 
 import (
+	"context"
 	"os"
 	"testing"
 
@@ -37,8 +38,9 @@ func TestErrorerErrors(t *testing.T) {
 	logger := slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{
 		ReplaceAttr: testerrorer.NewTestErrorer(wrappedT, nil),
 	}))
+	ctx := context.Background()
 	allocsPerRun := testing.AllocsPerRun(1, func() {
-		logger.Log(nil, slog.LevelInfo, "example")
+		logger.Log(ctx, slog.LevelInfo, "example")
 	})
 	if allocsPerRun > 1 {
 		// 1 allocation comes from the use of ReplaceAttr, so we can't reach 0
@@ -58,7 +60,7 @@ func TestErrorerErrors(t *testing.T) {
 		t.Fatalf("extra allocations introduced in error path: %.0f", allocsPerRun)
 	}
 	wrappedT.DidError = false
-	logger.Log(nil, slog.LevelError+1, "example")
+	logger.Log(ctx, slog.LevelError+1, "example")
 	if !wrappedT.DidError {
 		t.Fatal("did not error above error level")
 	}
@@ -70,7 +72,7 @@ func TestErrorerErrors(t *testing.T) {
 	}
 }
 
-func ExampleNewTestErrorer() {
+func Example() {
 	var t *testing.T
 	logger := slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{
 		ReplaceAttr: testerrorer.NewTestErrorer(t, nil),
