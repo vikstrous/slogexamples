@@ -24,8 +24,7 @@ func TestOutputter(t *testing.T) {
 	allocsPerRun := testing.AllocsPerRun(1, func() {
 		logger.Info("hello")
 	})
-	if allocsPerRun > 1 {
-		// 1 allocation comes from converting bytes to string, which we can't avoid
+	if allocsPerRun > 0 {
 		t.Fatalf("extra allocations introduced %.0f", allocsPerRun)
 	}
 	if !strings.Contains(wrappedT.Output, "hello") {

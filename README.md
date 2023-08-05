@@ -1,12 +1,12 @@
 # slogexamples
 
-`slogexamples` is a collection of examples showing how to extend slog. They are a follow up to https://medium.com/anchorage/three-logging-features-to-improve-your-slog-f72300a7fb66, showing some of the techniques mentioned briefly and some of the example logger features that can be implemented on top of slog. Three methods are mentioned in the article, but this repo covers a fourth one too.
+`slogexamples` is a collection of examples showing how to extend slog. They are a follow up to [this blog post on the Anchorage Digital blog](https://medium.com/anchorage/three-logging-features-to-improve-your-slog-f72300a7fb66), showing some of the techniques for extending `slog` mentioned there.
 
 All of these examples stay as close as possible to the 0 allocations goal of slog. They also all have example usage code.
 
 ## Hooking into io.Writer
 
-[testoutputter](https://pkg.go.dev/github.com/vikstrous/slogexamples/testoutputter/) shows how to intercept the logger's calls to the underlying io.Writer and do something useful. It sends all logs to `t.Log()`, which allows tests to output correctly.
+[testoutputter](https://pkg.go.dev/github.com/vikstrous/slogexamples/testoutputter/) shows how to intercept the logger's calls to the underlying io.Writer and do something useful. It sends all logs to `t.Log()`, which allows ensures that test output is readable.
 
 One limitation of all attempts to do this with slog is that the correct call site can't be printed. See https://github.com/golang/go/issues/59928 for more details.
 

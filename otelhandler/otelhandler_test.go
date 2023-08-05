@@ -40,7 +40,7 @@ func TestOtelHandler(t *testing.T) {
 	ctx := context.Background()
 	ctx, span := tracer.Start(ctx, "example")
 	allocsPerRun := testing.AllocsPerRun(1, func() {
-		// 2 allocations come from the text handler's handing of two string attributes and two come from converting the trace and span IDs from byte arrays to hex strings
+		// 2 allocations come from creating two slog.Attrs and two come from converting the trace and span IDs from byte arrays to hex strings
 		sl.InfoContext(ctx, "hello")
 	})
 	if allocsPerRun > 4 {

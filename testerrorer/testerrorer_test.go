@@ -2,6 +2,7 @@ package testerrorer_test
 
 import (
 	"context"
+	"io"
 	"os"
 	"testing"
 
@@ -24,7 +25,7 @@ func TestErrorerCallsNext(t *testing.T) {
 		nextWasCalled = true
 		return a
 	}
-	logger := slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{
+	logger := slog.New(slog.NewTextHandler(io.Discard, &slog.HandlerOptions{
 		ReplaceAttr: testerrorer.NewTestErrorer(nil, next),
 	}))
 	logger.Info("example")
@@ -35,15 +36,15 @@ func TestErrorerCallsNext(t *testing.T) {
 
 func TestErrorerErrors(t *testing.T) {
 	wrappedT := &TestT{T: t}
-	logger := slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{
+	logger := slog.New(slog.NewTextHandler(io.Discard, &slog.HandlerOptions{
 		ReplaceAttr: testerrorer.NewTestErrorer(wrappedT, nil),
 	}))
 	ctx := context.Background()
 	allocsPerRun := testing.AllocsPerRun(1, func() {
-		logger.Log(ctx, slog.LevelInfo, "example")
+		logger.InfoContext(ctx, "example")
 	})
 	if allocsPerRun > 1 {
-		// 1 allocation comes from the use of ReplaceAttr, so we can't reach 0
+		// There's one allocation that we can't avoid. https://github.com/golang/go/issues/61774
 		t.Fatalf("extra allocations introduced in info path %.0f", allocsPerRun)
 	}
 	if wrappedT.DidError {
