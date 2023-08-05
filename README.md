@@ -4,11 +4,13 @@
 
 All of these examples stay as close as possible to the 0 allocations goal of slog. They also all have example usage code.
 
+The [docs](https://pkg.go.dev/github.com/vikstrous/slogexamples) have the usage examples and API docs rendered nicely. Navigate into each package directory to see the code and the usage examples.
+
 ## Hooking into io.Writer
 
 [testoutputter](https://github.com/vikstrous/slogexamples/blob/master/testoutputter/testoutputter.go) shows how to intercept the logger's calls to the underlying io.Writer and do something useful. It sends all logs to `t.Log()`, which ensures that test output is readable when using parallel tests, subtests or when one test of many fails.
 
-One limitation of most attempts to use `t.Log()` with slog is that the correct call site can't be printed. See https://github.com/golang/go/issues/59928 for more details. The only way to correctly redirect logs to `t.Log()` is to use a wrapper around slog that calls `t.Log()` outside slog's code. An example of this is provided in [testoutputter2](https://github.com/vikstrous/slogexamples/blob/master/testoutputter2/testoutputter.go), which uses a wrapper around slog to do this. There are some obvious down sides of this approach, so I would personally prefer wrong line numbers over the `testoutputter2` solution.
+One limitation of most attempts to use `t.Log()` with slog is that the correct call site can't be printed. See [this issue](https://github.com/golang/go/issues/59928) for more details. The only way to correctly redirect logs to `t.Log()` is to use a wrapper around slog that calls `t.Log()` outside slog's code. An example of this is provided in [testoutputter2](https://github.com/vikstrous/slogexamples/blob/master/testoutputter2/testoutputter.go), which uses a wrapper around slog to do this. There are some obvious down sides of this approach, so I would personally prefer wrong line numbers over the `testoutputter2` solution.
 
 ## Wrapping slog
 
@@ -20,7 +22,7 @@ One limitation of most attempts to use `t.Log()` with slog is that the correct c
 
 [otelhandler](https://github.com/vikstrous/slogexamples/blob/master/otelhandler/otelhandler.go) is an example of a handler that acts as a middleware and adds additional attributes to log entries. In particular, it adds `TraceID` and `SpanID` to logs emitted within the context of an open telemetry trace. This allows for correlating logs and traces sent to different systems. See the [original blog post](https://medium.com/anchorage/three-logging-features-to-improve-your-slog-f72300a7fb66) for screenshots of what this looks like in Google Cloud.
 
-There's a lot more to writing custom handlers than what's shown here. This guide, from the author of slog, is very helpful. https://github.com/golang/example/tree/master/slog-handler-guide
+There's a lot more to writing custom handlers than what's shown here. [This guide](https://github.com/golang/example/tree/master/slog-handler-guide), from the author of slog, is very helpful.
 
 ## Bonus: Hooking into slog.HandlerOptions.ReplaceAttr
 
