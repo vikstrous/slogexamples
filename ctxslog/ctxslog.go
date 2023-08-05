@@ -6,25 +6,25 @@ import (
 	"golang.org/x/exp/slog"
 )
 
-// CtxSlog is a simplified API that doesn't support With and WithGroup and supports only four log levels, but it ensures that calls to the logger always pass a context.
+// CtxSlog is a logger with an API that requires a context when logging
 type CtxSlog struct {
 	logger *slog.Logger
 }
 
-func (l CtxSlog) Debug(ctx context.Context, msg string, attrs ...any) {
-	l.logger.DebugContext(ctx, msg, attrs...)
+func (l CtxSlog) Debug(ctx context.Context, msg string, args ...any) {
+	l.logger.DebugContext(ctx, msg, args...)
 }
 
-func (l CtxSlog) Info(ctx context.Context, msg string, attrs ...any) {
-	l.logger.InfoContext(ctx, msg, attrs...)
+func (l CtxSlog) Info(ctx context.Context, msg string, args ...any) {
+	l.logger.InfoContext(ctx, msg, args...)
 }
 
-func (l CtxSlog) Warn(ctx context.Context, msg string, attrs ...any) {
-	l.logger.WarnContext(ctx, msg, attrs...)
+func (l CtxSlog) Warn(ctx context.Context, msg string, args ...any) {
+	l.logger.WarnContext(ctx, msg, args...)
 }
 
-func (l CtxSlog) Error(ctx context.Context, msg string, attrs ...any) {
-	l.logger.ErrorContext(ctx, msg, attrs...)
+func (l CtxSlog) Error(ctx context.Context, msg string, args ...any) {
+	l.logger.ErrorContext(ctx, msg, args...)
 }
 
 func (l CtxSlog) With(args ...any) *CtxSlog {

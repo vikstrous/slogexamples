@@ -1,3 +1,6 @@
+// Package ctxslog2 provides functions for logging that force the caller to pass the logger through the context.
+// Even With and WithGroup functions return a context rather than a logger, ensuring that there is no direct access to the logger in functions that don't pass the context correctly.
+// In codebases where context propagation is important, expected and required, this is a helpful constraint to enforce.
 package ctxslog2
 
 import (
