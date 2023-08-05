@@ -57,7 +57,7 @@ func TestErrorerErrors(t *testing.T) {
 		t.Fatal("did not error at error level")
 	}
 	if allocsPerRun > 1 {
-		// 1 allocation comes from the use of ReplaceAttr, so we can't reach 0
+		// There's one allocation that we can't avoid. https://github.com/golang/go/issues/61774
 		t.Fatalf("extra allocations introduced in error path: %.0f", allocsPerRun)
 	}
 	wrappedT.DidError = false
