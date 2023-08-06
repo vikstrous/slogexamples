@@ -1,3 +1,4 @@
+// Package testoutputter2 shows a way to redirect logs to t.Log() by wrapping slog.Logger.
 package testoutputter2_test
 
 import (

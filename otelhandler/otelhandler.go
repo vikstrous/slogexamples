@@ -1,3 +1,4 @@
+// Package otelhandler shows a slog.Handler wrapper that adds extra attributes to log statements.
 package otelhandler
 
 import (

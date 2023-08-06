@@ -1,3 +1,4 @@
+// Package ctxslog shows how to wrap slog.Logger to always require a context.
 package ctxslog
 
 import (

@@ -1,3 +1,4 @@
+// Package testoutputter shows how to wrap io.Writer to redirect logs to t.Log()
 package testoutputter
 
 import (

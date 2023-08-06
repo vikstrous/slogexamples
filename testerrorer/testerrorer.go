@@ -1,3 +1,4 @@
+// Package testerrorer shows how to use slog.HandlerOptions.ReplaceAttr to fail tests when errors are logged.
 package testerrorer
 
 import (
