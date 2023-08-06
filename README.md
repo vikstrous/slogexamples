@@ -10,7 +10,7 @@ The [docs](https://pkg.go.dev/github.com/vikstrous/slogexamples) have the usage 
 
 [testoutputter](https://github.com/vikstrous/slogexamples/blob/master/testoutputter/testoutputter.go) shows how to intercept the logger's calls to the underlying io.Writer and do something useful. It sends all logs to `t.Log()`, which ensures that test output is readable when using parallel tests, subtests or when one test of many fails.
 
-One limitation of most attempts to use `t.Log()` with slog is that the correct call site can't be printed. See [this issue](https://github.com/golang/go/issues/59928) for more details. The only way to correctly redirect logs to `t.Log()` is to use a wrapper around slog that calls `t.Log()` outside slog's code. An example of this is provided in [testoutputter2](https://github.com/vikstrous/slogexamples/blob/master/testoutputter2/testoutputter.go), which uses a wrapper around slog to do this. There are some obvious down sides of this approach, so I would personally prefer wrong line numbers over the `testoutputter2` solution.
+One limitation of most attempts to use `t.Log()` with slog is that the correct call site can't be printed. See [this issue](https://github.com/golang/go/issues/59928) for more details. The only way to correctly redirect logs to `t.Log()` is to use a wrapper around slog that calls `t.Log()` outside slog's code. [testoutputter2](https://github.com/vikstrous/slogexamples/blob/master/testoutputter2/testoutputter.go) provides an exampleof this, using a wrapper around slog to do this. There are some obvious downsides of this approach, so I would personally prefer wrong line numbers over the `testoutputter2` solution.
 
 ## Wrapping slog
 
