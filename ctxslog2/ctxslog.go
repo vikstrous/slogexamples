@@ -9,20 +9,20 @@ import (
 	"golang.org/x/exp/slog"
 )
 
-func Debug(ctx context.Context, msg string, attrs ...any) {
-	get(ctx).DebugContext(ctx, msg, attrs...)
+func Debug(ctx context.Context, msg string, args ...any) {
+	get(ctx).DebugContext(ctx, msg, args...)
 }
 
-func Info(ctx context.Context, msg string, attrs ...any) {
-	get(ctx).InfoContext(ctx, msg, attrs...)
+func Info(ctx context.Context, msg string, args ...any) {
+	get(ctx).InfoContext(ctx, msg, args...)
 }
 
-func Warn(ctx context.Context, msg string, attrs ...any) {
-	get(ctx).WarnContext(ctx, msg, attrs...)
+func Warn(ctx context.Context, msg string, args ...any) {
+	get(ctx).WarnContext(ctx, msg, args...)
 }
 
-func Error(ctx context.Context, msg string, attrs ...any) {
-	get(ctx).ErrorContext(ctx, msg, attrs...)
+func Error(ctx context.Context, msg string, args ...any) {
+	get(ctx).ErrorContext(ctx, msg, args...)
 }
 
 func With(ctx context.Context, args ...any) context.Context {
