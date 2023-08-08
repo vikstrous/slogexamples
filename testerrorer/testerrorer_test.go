@@ -36,15 +36,14 @@ func TestErrorerCallsNext(t *testing.T) {
 
 func TestErrorerErrors(t *testing.T) {
 	wrappedT := &TestT{T: t}
-	logger := slog.New(slog.NewTextHandler(io.Discard, &slog.HandlerOptions{
+	logger := slog.New(slog.NewJSONHandler(io.Discard, &slog.HandlerOptions{
 		ReplaceAttr: testerrorer.NewTestErrorer(wrappedT, nil),
 	}))
 	ctx := context.Background()
 	allocsPerRun := testing.AllocsPerRun(1, func() {
 		logger.InfoContext(ctx, "example")
 	})
-	if allocsPerRun > 1 {
-		// There's one allocation that we can't avoid. https://github.com/golang/go/issues/61774
+	if allocsPerRun > 0 {
 		t.Fatalf("extra allocations introduced in info path %.0f", allocsPerRun)
 	}
 	if wrappedT.DidError {
@@ -56,8 +55,7 @@ func TestErrorerErrors(t *testing.T) {
 	if !wrappedT.DidError {
 		t.Fatal("did not error at error level")
 	}
-	if allocsPerRun > 1 {
-		// There's one allocation that we can't avoid. https://github.com/golang/go/issues/61774
+	if allocsPerRun > 0 {
 		t.Fatalf("extra allocations introduced in error path: %.0f", allocsPerRun)
 	}
 	wrappedT.DidError = false

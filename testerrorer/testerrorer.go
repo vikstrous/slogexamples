@@ -12,11 +12,21 @@ type testErrorer struct {
 	Next func(groups []string, a slog.Attr) slog.Attr
 }
 
+var levelNames = map[slog.Level]slog.Value{
+	slog.LevelDebug: slog.StringValue("DEBUG"),
+	slog.LevelInfo:  slog.StringValue("INFO"), // default
+	slog.LevelError: slog.StringValue("ERROR"),
+	slog.LevelWarn:  slog.StringValue("WARN"),
+}
+
 func (t *testErrorer) replaceAttr(groups []string, a slog.Attr) slog.Attr {
 	if a.Value.Kind() == slog.KindAny {
 		level, ok := a.Value.Any().(slog.Level)
-		if ok && level >= slog.LevelError {
-			t.TB.Errorf("An error was logged.")
+		if ok {
+			a.Value = levelNames[level]
+			if level >= slog.LevelError {
+				t.TB.Errorf("An error was logged.")
+			}
 		}
 	}
 	if t.Next == nil {
