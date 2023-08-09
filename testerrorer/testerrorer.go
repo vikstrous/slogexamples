@@ -2,9 +2,8 @@
 package testerrorer
 
 import (
+	"log/slog"
 	"testing"
-
-	"golang.org/x/exp/slog"
 )
 
 type testErrorer struct {

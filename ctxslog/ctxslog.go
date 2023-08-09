@@ -3,8 +3,7 @@ package ctxslog
 
 import (
 	"context"
-
-	"golang.org/x/exp/slog"
+	"log/slog"
 )
 
 // CtxSlog is a logger with an API that requires a context when logging

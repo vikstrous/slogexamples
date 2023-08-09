@@ -3,9 +3,9 @@ package otelhandler
 
 import (
 	"context"
+	"log/slog"
 
 	"go.opentelemetry.io/otel/trace"
-	"golang.org/x/exp/slog"
 )
 
 // OtelHandler adds extra fields to the record being logged containing traceID and spanID so that logs can be correlated with traces

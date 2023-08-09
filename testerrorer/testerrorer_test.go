@@ -3,11 +3,11 @@ package testerrorer_test
 import (
 	"context"
 	"io"
+	"log/slog"
 	"os"
 	"testing"
 
 	"github.com/vikstrous/slogexamples/testerrorer"
-	"golang.org/x/exp/slog"
 )
 
 type TestT struct {

@@ -2,10 +2,9 @@ package testoutputter2
 
 import (
 	"bytes"
+	"log/slog"
 	"sync"
 	"testing"
-
-	"golang.org/x/exp/slog"
 )
 
 // TestOutputterSlog

@@ -1,11 +1,11 @@
 package testoutputter_test
 
 import (
+	"log/slog"
 	"strings"
 	"testing"
 
 	"github.com/vikstrous/slogexamples/testoutputter"
-	"golang.org/x/exp/slog"
 )
 
 type TestT struct {

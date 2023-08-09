@@ -3,12 +3,12 @@ package ctxslog2_test
 import (
 	"bytes"
 	"context"
+	"log/slog"
 	"os"
 	"strings"
 	"testing"
 
 	"github.com/vikstrous/slogexamples/ctxslog2"
-	"golang.org/x/exp/slog"
 )
 
 func TestCtxSlog2(t *testing.T) {

@@ -3,6 +3,7 @@ package otelhandler_test
 import (
 	"bytes"
 	"context"
+	"log/slog"
 	"os"
 	"strings"
 	"testing"
@@ -10,7 +11,6 @@ import (
 	"github.com/vikstrous/slogexamples/otelhandler"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	trace "go.opentelemetry.io/otel/trace"
-	"golang.org/x/exp/slog"
 )
 
 var (
