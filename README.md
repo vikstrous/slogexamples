@@ -22,10 +22,12 @@ One limitation of most attempts to use `t.Log()` with slog is that the correct c
 
 [otelhandler](https://github.com/vikstrous/slogexamples/blob/master/otelhandler/otelhandler.go) is an example of a handler that acts as a middleware and adds additional attributes to log entries. In particular, it adds `TraceID` and `SpanID` to logs emitted within the context of an open telemetry trace. This allows for correlating logs and traces sent to different systems. See the [original blog post](https://medium.com/anchorage/three-logging-features-to-improve-your-slog-f72300a7fb66) for screenshots of what this looks like in Google Cloud.
 
-There's a lot more to writing custom handlers than what's shown here. [This guide](https://github.com/golang/example/tree/master/slog-handler-guide), from the author of slog, is very helpful.
+There's a lot more to writing custom handlers than what's shown here. [This guide](https://github.com/golang/example/tree/master/slog-handler-guide), from the author of slog, is very helpful. Also, see the `testerrorer2` example, explained below, for an easy way to implement a handler.
 
-## Bonus: Hooking into slog.HandlerOptions.ReplaceAttr
+## Hooking into slog.HandlerOptions.ReplaceAttr
 
 [testerrorer](https://github.com/vikstrous/slogexamples/blob/master/testerrorer/testerrorer.go) hooks into the `slog.TextHandler`'s `ReplaceAttr` callback. This function is called on every attribute before it's formatted for rendering and `testerrorer` uses the opportunity to check if anything is logged at error level and fail the test if so.
 
 One limitation is that it looks at all attributes with the type `slog.Level` that are logged rather than just the level of the log. This is to make sure that if the level attribute is renamed by another `ReplaceAttr` function, that doesn't break the functionality. The down side is that a call like `logger.Info("example", "l", slog.LevelError)` will cause the test to error incorrectly. The implementation can be trivially modified to look for the level attributed based on its name instead if the name is considered more stable.
+
+[testerrorer2](https://github.com/vikstrous/slogexamples/blob/master/testerrorer/testerrorer.go) doesn't have the same limitation because it's implemented as a handler. The benefit of this approach is that the handler can access all the information about the log entry, not just a single attribute at a time. The down side is that implementing a handler is normally much more complex. This example uses the [slogevent](github.com/vikstrous/slogevent) package to show an easy way to skip the boring parts and just implement the custom logic of the handler. It trades off performance for a simple API.
