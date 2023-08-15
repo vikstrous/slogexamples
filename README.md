@@ -1,5 +1,7 @@
 # slogexamples
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/vikstrous/slogexamples.svg)](https://pkg.go.dev/github.com/vikstrous/slogexamples)
+
 `slogexamples` is a collection of examples showing how to extend slog. They are a follow up to [this blog post on the Anchorage Digital blog](https://medium.com/anchorage/three-logging-features-to-improve-your-slog-f72300a7fb66), showing some of the techniques for extending `slog` mentioned there.
 
 All of these examples stay as close as possible to the 0 allocations goal of `slog`. Feel free to copy paste them, modify them, and mix them together to build your own closed or open source augmented loggers.
