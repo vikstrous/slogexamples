@@ -63,11 +63,10 @@ func TestErrorerErrors(t *testing.T) {
 	if !wrappedT.DidError {
 		t.Fatal("did not error above error level")
 	}
-	// Fialing the test in this case is actually a limitation of this approach rather than desired behaviour.
 	wrappedT.DidError = false
 	logger.Info("example", "l", slog.LevelError)
-	if !wrappedT.DidError {
-		t.Fatal("error level attribute in list didn't trigger a test fialure")
+	if wrappedT.DidError {
+		t.Fatal("error level attribute in list triggered a test fialure")
 	}
 }
 

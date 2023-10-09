@@ -11,21 +11,15 @@ type testErrorer struct {
 	Next func(groups []string, a slog.Attr) slog.Attr
 }
 
-var levelNames = map[slog.Level]slog.Value{
-	slog.LevelDebug: slog.StringValue("DEBUG"),
-	slog.LevelInfo:  slog.StringValue("INFO"), // default
-	slog.LevelError: slog.StringValue("ERROR"),
-	slog.LevelWarn:  slog.StringValue("WARN"),
-}
-
 func (t *testErrorer) replaceAttr(groups []string, a slog.Attr) slog.Attr {
-	if a.Value.Kind() == slog.KindAny {
-		level, ok := a.Value.Any().(slog.Level)
-		if ok {
-			a.Value = levelNames[level]
+	if groups == nil && a.Key == slog.LevelKey && a.Value.Kind() == slog.KindAny {
+		if level, ok := a.Value.Any().(slog.Level); ok {
 			if level >= slog.LevelError {
 				t.TB.Errorf("An error was logged.")
 			}
+
+			// Preserve 0 allocations using the strategy described in https://github.com/golang/go/issues/61774#issuecomment-1750763596
+			a.Value = slog.StringValue(level.String())
 		}
 	}
 	if t.Next == nil {
